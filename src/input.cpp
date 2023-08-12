@@ -11,7 +11,6 @@ void Input::processInput(RenderWindow render) {
 
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
-      windowOpen = false;
     }
   }
 }

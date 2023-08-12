@@ -1,3 +1,5 @@
+#pragma once
+
 enum gameStateOption {
   menu, 
   playing,

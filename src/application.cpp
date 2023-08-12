@@ -36,13 +36,11 @@ void Application::loop() {
     }
 
     SDL_RenderClear(render.getRenderer());
-
-    SDL_RenderCopy(render.getRenderer(), texture, &rect, &rect);
+    /* SDL_RenderCopy(render.getRenderer(), texture, &rect, &rect); */
 
     // Draw black background
     SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
     SDL_RenderPresent(render.getRenderer());
-
 
     // limit fps to 60
     Uint64 end = SDL_GetPerformanceCounter();
