@@ -1,7 +1,7 @@
 #include "../../include/Systems/entityRenderSystem.h"
 using namespace EngineSystems;
 
-EntityRenderSystem::EntityRenderSystem(RenderWindow *p_rendererPointer) {
+EntityRenderSystem::EntityRenderSystem(RenderHelper *p_rendererPointer) {
   rendererPointer = p_rendererPointer;
 };
 

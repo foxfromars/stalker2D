@@ -1,4 +1,4 @@
-#include "../include/gameState.h"
+#include "../../include/Systems/gameState.h"
 
 void GameState::changeGameState(gameStateOption newGameState) {
   currentGameState = newGameState;

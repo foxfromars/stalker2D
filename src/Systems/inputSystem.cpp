@@ -1,4 +1,4 @@
-#include "../include/input.h"
+#include "../../include/Systems/inputSystem.h"
 
 std::vector<int> Input::getMouseLocation() {
   int x, y;
@@ -6,7 +6,7 @@ std::vector<int> Input::getMouseLocation() {
   return {x, y};
 };
 
-void Input::processInput(RenderWindow render) {
+void Input::processInput() {
   SDL_Event event;
 
   while (SDL_PollEvent(&event)) {

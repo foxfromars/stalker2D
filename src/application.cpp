@@ -1,30 +1,35 @@
-#include <SDL2/SDL_render.h>
-#include <iostream>
-#include <iterator>
-#include <ostream>
-#include <vector>
-
 #include "../include/application.h"
-#include "../include/entity.h"
-#include "../include/renderWindow.h"
+#include <list>
 
-RenderWindow render;
+RenderHelper render;
 
 Application::Application() { render.createWindow(); };
 
 Application::~Application() { render.closeWindow(); };
 
 void Application::loop() {
+  // creating the map
+  EngineEntities::Map mapEntity = EngineEntities::Map(800, 800);
+
+  // create camera
+  Camera cameraEntity = Camera(0, 0, 100, 100);
+  EngineSystems::CameraSystem cameraSystem;
   bool windowOpen = true;
   int time;
+  std::list<EngineHelper::Entity> entities;
+  SDL_Texture *grassTexture = render.loadTexture("./assets/grass.png");
+  entities.push_back(
+      EngineHelper::Entity(300.0f, 400.0f, 30.0f, 30.0f, grassTexture));
+  entities.push_back(
+      EngineHelper::Entity(50.0f, 400.0f, 30.0f, 30.0f, grassTexture));
+  entities.push_back(
+      EngineHelper::Entity(400.0f, 60.0f, 30.0f, 30.0f, grassTexture));
+  entities.push_back(
+      EngineHelper::Entity(50.0f, 70.0f, 30.0f, 30.0f, grassTexture));
+  entities.push_back(
+      EngineHelper::Entity(60.0f, 80.0f, 30.0f, 30.0f, grassTexture));
 
-  SDL_Rect rect;
-  SDL_Texture *texture = render.loadTexture("./assets/grass.png");
-  rect.x = 250;
-  rect.y = 150;
-  rect.w = 200;
-  rect.h = 200;
-
+  std::cout << "Number of entities" << entities.size() << std::endl;
   while (windowOpen) {
     Uint64 start = SDL_GetPerformanceCounter();
     SDL_Event event;
@@ -32,11 +37,18 @@ void Application::loop() {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         windowOpen = false;
-      }
+      };
     }
 
     SDL_RenderClear(render.getRenderer());
     /* SDL_RenderCopy(render.getRenderer(), texture, &rect, &rect); */
+
+    // TODO create entities in the mapEntities
+    // TODO get Entities in the radius of the camera
+    std::list<EngineHelper::Entity> entitiesToRender =
+        cameraSystem.getEntitiesInView(cameraEntity, mapEntity, entities);
+    std::cout << "Entities to render:" << entitiesToRender.size() << std::endl;
+    // TODO Render this entities in the screen
 
     // Draw black background
     SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);

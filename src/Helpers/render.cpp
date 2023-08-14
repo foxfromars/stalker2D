@@ -1,4 +1,5 @@
 #include "../../include/Helpers/render.h"
+#include <SDL2/SDL_image.h>
 
 void RenderHelper::createWindow() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -35,7 +36,11 @@ void RenderHelper::createWindow() {
 void RenderHelper::closeWindow() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
-}
+};
 
 SDL_Window *RenderHelper::getWindow() { return window; };
 SDL_Renderer *RenderHelper::getRenderer() { return renderer; };
+
+SDL_Texture *RenderHelper::loadTexture(const char *texturePath){
+  return IMG_LoadTexture(renderer, texturePath); 
+};

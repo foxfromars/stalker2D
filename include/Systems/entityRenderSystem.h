@@ -1,5 +1,6 @@
+#pragma once
+#include "../Helpers/render.h"
 #include "../entity.h"
-#include "../renderWindow.h"
 #include "SDL2/SDL.h"
 #include <list>
 
@@ -8,7 +9,7 @@ namespace EngineSystems {
 class EntityRenderSystem {
 private:
   std::list<EngineHelper::Entity> *entities;
-  RenderWindow *rendererPointer;
+  RenderHelper *rendererPointer;
 
 public:
   std::list<EngineHelper::Entity> getEntities();
@@ -16,7 +17,7 @@ public:
   void popEntity();
   void clearEntityList();
   void renderAllEntities();
-  EntityRenderSystem(RenderWindow *p_rendererPointer);
+  EntityRenderSystem(RenderHelper *p_rendererPointer);
   ~EntityRenderSystem();
 };
 
