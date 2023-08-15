@@ -46,3 +46,24 @@ CameraSystem::getEntitiesInView(Camera camera, EngineEntities::Map map,
       });
   return filterEntities;
 };
+
+void CameraSystem::moveCamera(Camera *camera, direction cameraDirection) {
+  switch (cameraDirection) {
+  case up: {
+    camera->setY(camera->getY() + velocity);
+    break;
+  }
+  case down: {
+    camera->setY(camera->getY() - velocity);
+    break;
+  }
+  case left: {
+    camera->setX(camera->getX() - velocity);
+    break;
+  }
+  case right: {
+    camera->setX(camera->getX() + velocity);
+    break;
+  }
+  }
+};

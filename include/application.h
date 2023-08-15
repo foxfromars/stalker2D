@@ -14,6 +14,7 @@
 #include "../include/Entities/camera.h"
 #include "../include/Entities/map.h"
 #include "../include/Systems/cameraSystem.h"
+#include "../include/Systems/entityRenderSystem.h"
 
 class Application {
 public:

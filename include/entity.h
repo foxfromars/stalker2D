@@ -21,7 +21,7 @@ public:
   void setVectorLocation(std::vector<float>);
   void setXLocation(float newXLocation);
   void setYLocation(float newYLocation);
-  SDL_Rect getCurrentFrame();
+  SDL_Rect *getCurrentFrame();
   SDL_Rect *getCurrentFramePointer();
   SDL_Texture *getCurrentTexture();
   float getHeight();

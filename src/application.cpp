@@ -1,4 +1,5 @@
 #include "../include/application.h"
+#include <SDL2/SDL_render.h>
 #include <list>
 
 RenderHelper render;
@@ -13,21 +14,18 @@ void Application::loop() {
 
   // create camera
   Camera cameraEntity = Camera(0, 0, 100, 100);
+  EngineSystems::EntityRenderSystem entityRenderSystem =
+      EngineSystems::EntityRenderSystem(render.getRenderer());
   EngineSystems::CameraSystem cameraSystem;
   bool windowOpen = true;
   int time;
   std::list<EngineHelper::Entity> entities;
   SDL_Texture *grassTexture = render.loadTexture("./assets/grass.png");
-  entities.push_back(
-      EngineHelper::Entity(300.0f, 400.0f, 30.0f, 30.0f, grassTexture));
-  entities.push_back(
-      EngineHelper::Entity(50.0f, 400.0f, 30.0f, 30.0f, grassTexture));
-  entities.push_back(
-      EngineHelper::Entity(400.0f, 60.0f, 30.0f, 30.0f, grassTexture));
-  entities.push_back(
-      EngineHelper::Entity(50.0f, 70.0f, 30.0f, 30.0f, grassTexture));
-  entities.push_back(
-      EngineHelper::Entity(60.0f, 80.0f, 30.0f, 30.0f, grassTexture));
+  entities.push_back(EngineHelper::Entity(300, 400, 30, 30, grassTexture));
+  entities.push_back(EngineHelper::Entity(50, 400, 30, 30, grassTexture));
+  entities.push_back(EngineHelper::Entity(400, 60, 400, 400, grassTexture));
+  entities.push_back(EngineHelper::Entity(50, 70, 30, 30, grassTexture));
+  entities.push_back(EngineHelper::Entity(60, 80, 30, 30, grassTexture));
 
   std::cout << "Number of entities" << entities.size() << std::endl;
   while (windowOpen) {
@@ -37,8 +35,19 @@ void Application::loop() {
     while (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         windowOpen = false;
-      };
+      } else if (event.key.keysym.sym == SDLK_w) {
+        cameraSystem.moveCamera(&cameraEntity, up);
+      } else if (event.key.keysym.sym == SDLK_s) {
+        cameraSystem.moveCamera(&cameraEntity, down);
+      } else if (event.key.keysym.sym == SDLK_a) {
+        cameraSystem.moveCamera(&cameraEntity, left);
+      } else if (event.key.keysym.sym == SDLK_d) {
+        cameraSystem.moveCamera(&cameraEntity, right);
+      }
     }
+
+    std::cout << cameraEntity.getX() << std::endl;
+    std::cout << cameraEntity.getY() << std::endl;
 
     SDL_RenderClear(render.getRenderer());
     /* SDL_RenderCopy(render.getRenderer(), texture, &rect, &rect); */
@@ -47,9 +56,10 @@ void Application::loop() {
     // TODO get Entities in the radius of the camera
     std::list<EngineHelper::Entity> entitiesToRender =
         cameraSystem.getEntitiesInView(cameraEntity, mapEntity, entities);
-    std::cout << "Entities to render:" << entitiesToRender.size() << std::endl;
+    std::cout << "Entities to render: " << entitiesToRender.size() << std::endl;
+    entityRenderSystem.renderAllEntitiesInTheCamera(cameraEntity,
+                                                    entitiesToRender);
     // TODO Render this entities in the screen
-
     // Draw black background
     SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);
     SDL_RenderPresent(render.getRenderer());

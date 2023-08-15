@@ -41,6 +41,6 @@ void RenderHelper::closeWindow() {
 SDL_Window *RenderHelper::getWindow() { return window; };
 SDL_Renderer *RenderHelper::getRenderer() { return renderer; };
 
-SDL_Texture *RenderHelper::loadTexture(const char *texturePath){
-  return IMG_LoadTexture(renderer, texturePath); 
+SDL_Texture *RenderHelper::loadTexture(const char *texturePath) {
+  return IMG_LoadTexture(renderer, texturePath);
 };
