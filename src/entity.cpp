@@ -27,10 +27,12 @@ SDL_Texture *EngineHelper::Entity::getCurrentTexture() {
 
 void EngineHelper::Entity::setXLocation(float newXLocation) {
   x = newXLocation;
+  currentFrame.x = newXLocation;
 };
 
 void EngineHelper::Entity::setYLocation(float newYLocation) {
   y = newYLocation;
+  currentFrame.y = newYLocation;
 };
 
 EngineHelper::Entity::~Entity(){};

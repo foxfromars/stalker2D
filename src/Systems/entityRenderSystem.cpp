@@ -27,8 +27,10 @@ void EntityRenderSystem::renderAllEntitiesInTheCamera(
 
   for (auto &&entity : entities) {
     std::cout << "Entity Rendering" << std::endl;
-    entity.setYLocation(entity.getYLocation() - initY); 
+    entity.setYLocation(entity.getYLocation() - initY);
     entity.setXLocation(entity.getXLocation() - initX);
+    std::cout << entity.getYLocation() << std::endl;
+    std::cout << entity.getXLocation() << std::endl;
     renderEntity(entity);
   };
 };
