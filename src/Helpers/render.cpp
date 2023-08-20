@@ -1,5 +1,7 @@
 #include "../../include/Helpers/render.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_render.h>
+#include <SDL2/SDL_ttf.h>
 
 void RenderHelper::createWindow() {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -43,4 +45,23 @@ SDL_Renderer *RenderHelper::getRenderer() { return renderer; };
 
 SDL_Texture *RenderHelper::loadTexture(const char *texturePath) {
   return IMG_LoadTexture(renderer, texturePath);
+};
+
+SDL_Surface *RenderHelper::createTextSurface(TTF_Font *font, const char *text,
+                                             SDL_Color color) {
+  SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+  if (!surface) {
+    std::cout << "Error Creating Text Surface: " << TTF_GetError() << std::endl;
+    throw "error";
+  }
+  return surface;
+};
+
+SDL_Texture *RenderHelper::createTextureFromSurface(SDL_Surface *surface) {
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+  if (!texture) {
+    std::cout << "Error Creating Text Texture" << SDL_GetError() << std::endl;
+    throw "error";
+  }
+  return texture;
 };

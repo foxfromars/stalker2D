@@ -16,6 +16,7 @@ void Application::loop() {
   Camera cameraEntity = Camera(0, 0, 100, 100);
   EngineSystems::EntityRenderSystem entityRenderSystem =
       EngineSystems::EntityRenderSystem(render.getRenderer());
+  EngineSystems::FontSystem fontSystem = EngineSystems::FontSystem(&render);
   EngineSystems::CameraSystem cameraSystem;
   bool windowOpen = true;
   int time;
@@ -28,6 +29,10 @@ void Application::loop() {
   entities.push_back(EngineHelper::Entity(60, 80, 30, 30, grassTexture));
 
   std::cout << "Number of entities" << entities.size() << std::endl;
+
+  /* Text testeText = Text(10, 10, {254, 0, 0}, 10, 10, yoster, "hello world");
+   */
+
   while (windowOpen) {
     Uint64 start = SDL_GetPerformanceCounter();
     SDL_Event event;
@@ -59,6 +64,9 @@ void Application::loop() {
     std::cout << "Entities to render: " << entitiesToRender.size() << std::endl;
     entityRenderSystem.renderAllEntitiesInTheCamera(cameraEntity,
                                                     entitiesToRender);
+
+    /* fontSystem.renderText(&testeText); */
+
     // TODO Render this entities in the screen
     // Draw black background
     SDL_SetRenderDrawColor(render.getRenderer(), 0, 0, 0, 255);

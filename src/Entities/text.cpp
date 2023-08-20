@@ -1,4 +1,4 @@
-#include "../include/font.h"
+#include "../../include/Entities/text.h"
 
 void loadFontErrorHandler(const TTF_Font *font, const char *fontPath) {
   if (!font) {
@@ -7,18 +7,23 @@ void loadFontErrorHandler(const TTF_Font *font, const char *fontPath) {
   }
 };
 
-Font::Font(SDL_Renderer *p_renderer, int p_fontSize, int p_fontWeight,
-           SDL_Color p_color, float p_x, float p_y, fontOption fontOption) {
+void Text::buildText() {
+  fontTexture = renderHelper->createTextureFromSurface(
+      renderHelper->createTextSurface(fontFamily, text, color));
+};
+
+Text::Text(int p_fontSize, int p_fontWeight, SDL_Color p_color, float p_x,
+           float p_y, fontOption fontFamilyOption, const char *text)
+    : EngineHelper::Entity(p_x, p_y, p_fontSize, p_fontSize) {
 
   fontSize = p_fontSize;
   fontWeight = p_fontWeight;
   color = p_color;
-  x = p_x;
-  y = p_y;
-  renderer = p_renderer;
-  text = "Hello world";
+  setXLocation(p_x);
+  setYLocation(p_y);
+  text = text;
 
-  switch (fontOption) {
+  switch (fontFamilyOption) {
   case yoster: {
     const char *fontPath = "./assets/yoster.ttf";
     fontFamily = TTF_OpenFont(fontPath, fontSize);
@@ -37,13 +42,17 @@ Font::Font(SDL_Renderer *p_renderer, int p_fontSize, int p_fontWeight,
   }
   };
 
-  SDL_Surface *textSurface = TTF_RenderText_Solid(fontFamily, text, color);
-  if (!textSurface) {
-    std::cout << "Error Creating Text Surface: " << TTF_GetError() << std::endl;
-  }
+  buildText();
+};
 
-  fontTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-  if (!fontTexture) {
-    std::cout << "Error Creating Text Texture" << SDL_GetError() << std::endl;
+SDL_Texture *Text::getTexture() {
+  if (fontTexture != NULL) {
+    return fontTexture;
+  } else {
+    throw "Error loading texture";
   }
+};
+
+Text::~Text(){
+
 };

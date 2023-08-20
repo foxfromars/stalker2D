@@ -14,6 +14,7 @@ private:
 
 public:
   Entity(float p_x, float p_y, float p_h, float p_w, SDL_Texture *texture);
+  Entity(float p_x, float p_y, float p_h, float p_w);
   ~Entity();
   std::vector<float> getVectorLocation();
   float getXLocation();
@@ -26,6 +27,6 @@ public:
   SDL_Texture *getCurrentTexture();
   float getHeight();
   float getWidth();
-  SDL_Texture * getTexture();
+  SDL_Texture *getTexture();
 };
 } // namespace EngineHelper
